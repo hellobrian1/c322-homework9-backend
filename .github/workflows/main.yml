@@ -35,4 +35,4 @@ jobs:
         run: |
           docker login --username hellobrian1 --password ${{secrets.ACCESS_TOKEN}} ghcr.io
           docker build -t ghcr.io/hellobrian1/c322-spring2024-homework2:latest --file Dockerfile .  
-          docker push ghcr.io/hellobrian1/guitar-service:latest 
+          docker push ghcr.io/hellobrian1/c322-spring2024-homework2:latest 
