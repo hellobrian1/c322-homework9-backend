@@ -1,7 +1,15 @@
 package c322spring2024homework2.c322spring2024homework2.controllers;
 
 
+import c322spring2024homework2.c322spring2024homework2.model.Customer;
+import c322spring2024homework2.c322spring2024homework2.repository.CustomerRepository;
+import c322spring2024homework2.c322spring2024homework2.security.TokenService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
