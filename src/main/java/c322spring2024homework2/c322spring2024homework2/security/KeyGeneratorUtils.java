@@ -1,8 +1,10 @@
 package c322spring2024homework2.c322spring2024homework2.security;
 
+import org.springframework.stereotype.Component;
+
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-
+@Component
 public class KeyGeneratorUtils {
 
     private KeyGeneratorUtils() {}

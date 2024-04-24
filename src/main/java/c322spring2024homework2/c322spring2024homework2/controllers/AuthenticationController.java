@@ -18,7 +18,9 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     CustomerRepository customerRepository;
-    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService,
+
+    public AuthenticationController(AuthenticationManager authenticationManager,
+                                    TokenService tokenService,
                                     CustomerRepository customerRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
