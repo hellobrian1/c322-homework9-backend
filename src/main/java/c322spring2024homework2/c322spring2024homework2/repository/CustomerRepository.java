@@ -1,6 +1,7 @@
 package c322spring2024homework2.c322spring2024homework2.repository;
 
 import c322spring2024homework2.c322spring2024homework2.model.Customer;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component
-public class CustomerRepository {
+public class CustomerRepository extends CrudRepository<Customer, String> {
     private static final Logger LOG =
             LoggerFactory.getLogger(CustomerRepository.class);
     public CustomerRepository() {
