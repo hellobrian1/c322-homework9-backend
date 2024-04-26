@@ -1,6 +1,7 @@
 package c322spring2024homework2.c322spring2024homework2.repository;
 
 import c322spring2024homework2.c322spring2024homework2.model.GuitarData;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class InventoryFileRepository {
     public InventoryFileRepository() {
         File guitarsImagesDirectory = new File("guitars/images");

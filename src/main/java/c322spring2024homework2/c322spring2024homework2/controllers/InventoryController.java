@@ -1,6 +1,7 @@
 package c322spring2024homework2.c322spring2024homework2.controllers;
 
 import c322spring2024homework2.c322spring2024homework2.model.GuitarData;
+import c322spring2024homework2.c322spring2024homework2.repository.InventoryFileRepository;
 import c322spring2024homework2.c322spring2024homework2.repository.InventoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,34 +11,37 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/inventory")
 public class InventoryController{
-
+    private InventoryFileRepository inventoryFileRepository;
     private InventoryRepository inventoryRepository;
-    public InventoryController(InventoryRepository inventoryRepository){
+
+    public InventoryController(InventoryRepository inventoryRepository, InventoryFileRepository inventoryFileRepository){
         this.inventoryRepository = inventoryRepository;
+        this.inventoryFileRepository = inventoryFileRepository;
     }
 
 
     @GetMapping
-    public List<GuitarData> findAll(){
+    public Iterable<GuitarData> findAll(){
         try{
             return inventoryRepository.findAll();
-        } catch (IOException e){
-            return null;
+        } catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 
 
     @PostMapping
-    public boolean add(@RequestBody GuitarData data){
+    public String add(@RequestBody GuitarData data){
         try{
-            System.out.println("Adding guitar to inventory: " + data.serialNumber());
-            return inventoryRepository.add(data);
-        } catch (IOException e){
+            System.out.println("Adding guitar to inventory: " + data.getSerialNumber());
+            return inventoryRepository.save(data).getSerialNumber();
+        } catch (Exception e){
             throw new RuntimeException(e);
         }
     }
@@ -45,17 +49,18 @@ public class InventoryController{
     @GetMapping("/{serialNumber}")
     public ResponseEntity<GuitarData> find(@PathVariable String serialNumber){
         try{
-            GuitarData guitar = inventoryRepository.find(serialNumber);
+            //GuitarData guitar = inventoryRepository.find(serialNumber);
+            Optional<GuitarData> guitar = inventoryRepository.findById(Integer.valueOf(serialNumber));
             if(guitar != null){
                 return ResponseEntity
                         .status(HttpStatus.FOUND)
-                        .body(guitar);
+                        .body(guitar.get());
             } else {
                 return ResponseEntity
                         .status(HttpStatus.NOT_FOUND)
                         .body(null);
             }
-        } catch (IOException e){
+        } catch (Exception e){
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);

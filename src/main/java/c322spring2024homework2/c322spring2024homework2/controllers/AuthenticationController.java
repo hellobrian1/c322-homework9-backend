@@ -7,6 +7,7 @@ import c322spring2024homework2.c322spring2024homework2.security.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,11 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     CustomerRepository customerRepository;
-
-    public AuthenticationController(AuthenticationManager authenticationManager,
+    public AuthenticationController(AuthenticationManager
+                                            authenticationManager,
                                     TokenService tokenService,
-                                    CustomerRepository customerRepository) {
+                                    CustomerRepository
+                                            customerRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.customerRepository = customerRepository;
@@ -29,6 +31,10 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public void signup(@RequestBody Customer customer) {
         try {
+            BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+            String passwordEncoded = bc.encode(customer.getPassword());
+            customer.setPassword(passwordEncoded);
+            System.out.println("touched");
             customerRepository.save(customer);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -37,11 +43,13 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     public String login(@RequestBody Customer customer) {
+        System.out.println("touched");
         Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(
-                                customer.username(), customer.password()));
+                                customer.getUsername()
+                                , customer.getPassword()));
+
         return tokenService.generateToken(authentication);
     }
-
 }

@@ -1,5 +1,5 @@
 services:
-  ducks-database:
+  guitars-database:
     image: postgres:alpine
     container_name: guitars-database
     ports:

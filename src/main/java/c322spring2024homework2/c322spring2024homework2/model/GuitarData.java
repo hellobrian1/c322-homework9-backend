@@ -2,11 +2,15 @@ package c322spring2024homework2.c322spring2024homework2.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(schema = "guitars", name="guitars")
 public class GuitarData {
+    @Id
+    @GeneratedValue
     private String serialNumber;
     private double price;
     private String builder;
